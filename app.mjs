@@ -38,7 +38,6 @@ app.get('/callback', (_, w) => {
             for (param of params) {
                 args[param.split('=')[0]] = param.split('=')[1]
             }
-            console.log(args)
             var form = new URLSearchParams();
             form.set('code', args.code);
             form.set('grant_type', 'authorization_code');
@@ -52,9 +51,16 @@ app.get('/callback', (_, w) => {
                     'Authorization': 'Basic ${Buffer.from(c.client_id + ":" + c.secret).toString('base64')}',
                 },
             }
-            fetch('${c.token_endpoint}', options).then(res => {
-                console.log(res.json());
-            });
+            fetch('${c.token_endpoint}', options)
+                .then(res => res.json())
+                .then(res => {
+                    const pat = document.createElement('p');
+                    const pit = document.createElement('p');
+                    pat.innerHTML = "access_token: " + res.access_token;
+                    pit.innerHTML = "id_token: " + res.id_token;
+                    document.body.appendChild(pat);
+                    document.body.appendChild(pit);
+                });
         </script>
     `)
     w.send(b)
