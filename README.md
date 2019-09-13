@@ -10,6 +10,9 @@ npm install
 
 ## Usage
 
+This implementation is just an example. Not recommended for use in production.  
+You should use a proper oauth2 client. 
+
 Provide your client credentials and requested scopes.
 
 ```javascript
